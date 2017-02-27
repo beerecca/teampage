@@ -1,35 +1,14 @@
+import Google from './lib/google';
 
-const _staff = (event, context, callback) => {
-    const response = {
-        statusCode: 200,
-        body: JSON.stringify({
-            message: 'Go Serverless v1.0! Your function executed successfully!',
-            input: event,
-        }),
-    };
+import Staff from './lib/staff';
+import Users from './lib/users';
 
-    callback(null, response);
+export function _staff(event, context, callback) {
+    const handler = new Staff({ Google });
+    handler.run(event, context, callback);
+}
 
-    // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-    // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
-};
-
-const _users = (event, context, callback) => {
-    const response = {
-        statusCode: 200,
-        body: JSON.stringify({
-            message: 'Go Serverless v1.0! Your function executed successfully!',
-            input: event,
-        }),
-    };
-
-    callback(null, response);
-
-    // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-    // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
-};
-
-export default {
-    _staff,
-    _users
+export function _users(event, context, callback) {
+    const handler = new Users({ Google });
+    handler.run(event, context, callback);
 }
