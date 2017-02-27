@@ -5,7 +5,19 @@ export default class Users {
     }
 
     run(event, context, callback) {
-        callback(null, 'success');
-    }
 
+        this.google.getUsers()
+            .then(users => {
+                return users.map(user => ({
+                    id: user.id,
+                    name: user.name.fullName
+                }));
+            })
+            .then(userSummaries => {
+                callback(null, userSummaries);
+            })
+            .catch(err => {
+                callback(err);
+            });
+    }
 }

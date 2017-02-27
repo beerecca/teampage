@@ -7,31 +7,15 @@ plugins:
 provider:
     name: aws
     runtime: nodejs4.3
-    stage: dev
     region: eu-central-1
+    environment:
+        GOOGLE_CLIENT_EMAIL: ${self:custom.secrets.GOOGLE_CLIENT_EMAIL}
+        GOOGLE_ADMIN_EMAIL: ${self:custom.secrets.GOOGLE_ADMIN_EMAIL}
+        GOOGLE_PRIVATE_KEY: ${self:custom.secrets.GOOGLE_PRIVATE_KEY}
 
 custom:
     secrets: ${file(secrets.${opt:stage, self:provider.stage}.yml)}
     webpackIncludeModules: true
-
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
 
 functions:
     users:
