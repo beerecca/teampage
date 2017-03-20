@@ -1,15 +1,17 @@
 export default class Staff {
 
-    constructor({ google, htmlGenerator, upload }) {
+    constructor({ google, htmlGenerator, upload, db}) {
         this.google = google;
         this.htmlGenerator = htmlGenerator;
         this.upload = upload;
+        this.db = db;
+        this.table = process.env.SETTINGS_TABLE;
     }
 
     run(event, context, callback) {
         const selectedStaffIds = event.body.users;
 
-        this.google.getUsers()
+        this.google.getUsers() 
             .then(users => {
                 return users
                     .filter(user => includedInSelection(user.id, selectedStaffIds))
@@ -17,15 +19,17 @@ export default class Staff {
             })
             .then(values => {
                 const html = this.htmlGenerator.generate(values);
-                this.upload.upload(html);
-
-                callback(null, html);
+                return this.upload.upload(html);
+            })
+            .then(result => {
+                return this.db.setSelectedUsers(selectedStaffIds);
+            })
+            .then(() => {
+                callback(null, 'success');
             })
             .catch(err => {
-                console.log('err', err);
                 callback(err);
             });
-
     }
 }
 

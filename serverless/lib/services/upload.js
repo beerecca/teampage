@@ -6,7 +6,7 @@ class Upload {
         return new Promise((resolve, reject) => {
             const s3 = new aws.S3();
             s3.upload({
-                Bucket: 'team-html',
+                Bucket: process.env.BUCKET_NAME,
                 Key: 'teampage.html',
                 Body: html,
                 ACL: 'public-read',

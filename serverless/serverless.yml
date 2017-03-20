@@ -8,15 +8,23 @@ provider:
     name: aws
     runtime: nodejs4.3
     region: eu-central-1
+    stage: dev
     environment:
         GOOGLE_CLIENT_EMAIL: ${self:custom.secrets.GOOGLE_CLIENT_EMAIL}
         GOOGLE_ADMIN_EMAIL: ${self:custom.secrets.GOOGLE_ADMIN_EMAIL}
         GOOGLE_PRIVATE_KEY: ${self:custom.secrets.GOOGLE_PRIVATE_KEY}
+        SETTINGS_TABLE: ${self:service}-${opt:stage, self:provider.stage}-settings
+        BUCKET_NAME: team-html
     iamRoleStatements:
         - Effect: Allow
           Action:
             - s3:*
-          Resource: "arn:aws:s3:::team-html/*"
+          Resource: "arn:aws:s3:::${self:provider.environment.BUCKET_NAME}/*"
+        - Effect: Allow
+          Action:
+            - dynamodb:GetItem
+            - dynamodb:UpdateItem
+          Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.SETTINGS_TABLE}"
 
 custom:
     secrets: ${file(secrets.${opt:stage, self:provider.stage}.yml)}
@@ -42,11 +50,27 @@ functions:
 
 resources:
     Resources:
+        SettingsTable:
+            Type: AWS::DynamoDB::Table
+            DeletionPolicy: Retain
+            Properties:
+                TableName: ${self:provider.environment.SETTINGS_TABLE}
+                AttributeDefinitions:
+                    -
+                        AttributeName: key
+                        AttributeType: S
+                KeySchema:
+                    -
+                        AttributeName: key
+                        KeyType: HASH
+                ProvisionedThroughput:
+                    ReadCapacityUnits: 1
+                    WriteCapacityUnits: 1
         TeamBucket:
             Type: AWS::S3::Bucket
             Properties:
                 AccessControl: PublicRead
-                BucketName: team-html
+                BucketName: ${self:provider.environment.BUCKET_NAME}
                 CorsConfiguration:
                           CorsRules:
                           - AllowedMethods:
