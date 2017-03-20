@@ -12,6 +12,11 @@ provider:
         GOOGLE_CLIENT_EMAIL: ${self:custom.secrets.GOOGLE_CLIENT_EMAIL}
         GOOGLE_ADMIN_EMAIL: ${self:custom.secrets.GOOGLE_ADMIN_EMAIL}
         GOOGLE_PRIVATE_KEY: ${self:custom.secrets.GOOGLE_PRIVATE_KEY}
+    iamRoleStatements:
+        - Effect: Allow
+          Action:
+            - s3:*
+          Resource: "arn:aws:s3:::team-html/*"
 
 custom:
     secrets: ${file(secrets.${opt:stage, self:provider.stage}.yml)}
@@ -37,11 +42,16 @@ functions:
 
 resources:
     Resources:
-        TemplateBucket:
+        TeamBucket:
             Type: AWS::S3::Bucket
             Properties:
-                BucketName: team-page-template
-        OutputBucket:
-            Type: AWS::S3::Bucket
-            Properties:
-                BucketName: team-page-output
+                AccessControl: PublicRead
+                BucketName: team-html
+                CorsConfiguration:
+                          CorsRules:
+                          - AllowedMethods:
+                            - GET
+                            AllowedOrigins:
+                            - "*"
+                            AllowedHeaders:
+                            - "*"

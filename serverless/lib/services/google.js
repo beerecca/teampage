@@ -30,15 +30,17 @@ class Google {
     getUsers() {
         return this.login()
             .then(() => {
+                const params = {
+                    domain: 'usabilla.com',
+                    viewType: 'admin_view',
+                    auth: this.jwt
+                };
                 return new Promise((resolve, reject) => {
-                    googleapis.admin('directory_v1').users.list({
-                        domain: 'usabilla.com',
-                        viewType: 'domain_public',
-                        auth: this.jwt
-                    }, function (err, data) {
-                        if (err) reject(new Error(err));
-                        resolve(data.users);
-                    });
+                    googleapis.admin('directory_v1').users.list(params,
+                        function (err, data) {
+                            if (err) reject(new Error(err));
+                            resolve(data.users);
+                        });
                 });
             });
     }

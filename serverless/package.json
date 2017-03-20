@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "googleapis": "^17.1.0"
+    "aws-sdk": "^2.22.0",
+    "googleapis": "^17.1.0",
+    "handlebars": "^4.0.6"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
