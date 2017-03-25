@@ -79,7 +79,7 @@
                 }
                 return arr;
             }, []);
-            console.log('users', users);
+
             postUsers(users).then(() => {
                 window.alert('Successfully submitted!');
                 location.reload(true);
@@ -100,10 +100,10 @@
             });
     }
 
-    function unique(array){
+    function uniqueAndSort(array){
         return array.filter(function(el, index, arr) {
             return index === arr.indexOf(el);
-        });
+        }).sort();
     }
 
     function createFilters(arr, container, type) {
@@ -131,8 +131,8 @@
         teamFilters.setAttribute('class', 'tp-filters--teams');
 
         const staff = [].slice.call(document.getElementsByClassName('tp-staff'));
-        const offices = unique(staff.map(s => s.getAttribute('data-office')));
-        const teams = unique(staff.map(s => s.getAttribute('data-team')));
+        const offices = uniqueAndSort(staff.map(s => s.getAttribute('data-office')));
+        const teams = uniqueAndSort(staff.map(s => s.getAttribute('data-team')));
 
         createFilters(offices, officeFilters, 'office');
         createFilters(teams, teamFilters, 'team');
@@ -147,7 +147,7 @@
         teamPage.insertBefore(p, container);
 
         activateFilter('Amsterdam', 'office');
-        activateFilter('Marketing', 'team'); //TODO: change this to Management
+        activateFilter('Management', 'team');
     }
 
 
