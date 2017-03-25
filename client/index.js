@@ -1,13 +1,4 @@
 (function() {
-const returnedFromLambdaGet = {
-    users: [{
-        "id": "106058633312625095450",
-        "name": "Rafael Dohms"
-    }, {
-        "id": "107797129014721380856",
-        "name": "Rebecca Hill"
-    }]
-};
 
 function getUsers() {
     return fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:0747532699')
@@ -20,7 +11,7 @@ function getUsers() {
 function postUsers(users) {
     return fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:0747532699', {
         method: 'POST',
-        body: users
+        body: JSON.stringify({users: users})
     })
         .then(response => response.json())
         .catch(error => {
@@ -35,7 +26,7 @@ function createUserList(users) {
 
     users.forEach(user => {
         const div = document.createElement('div');
-        div.setAttribute('class', 'user');
+        div.setAttribute('class', 'checkbox');
 
         const input = document.createElement('input');
         input.type = 'checkbox';
@@ -46,8 +37,8 @@ function createUserList(users) {
         label.setAttribute('for', user.id);
         const text = document.createTextNode(user.name);
 
+        label.appendChild(input);
         label.appendChild(text);
-        div.appendChild(input);
         div.appendChild(label);
         fragment.appendChild(div);
     });
@@ -55,8 +46,16 @@ function createUserList(users) {
     userListDiv.appendChild(fragment);
 }
 
-function postSelectedUsers() {
-    const checkboxes = document.getElementsByClassName('user-checkbox');
+function selectAll(checkboxes) {
+    const allCheckbox = document.getElementById('all');
+    allCheckbox.addEventListener('click', function() {
+        Array.from(checkboxes).forEach(checkbox => {
+            checkbox.checked = allCheckbox.checked;
+        });
+    })
+}
+
+function postSelectedUsers(checkboxes) {
     document.getElementById('submit-user-list').addEventListener('click', function(e) {
         e.preventDefault();
         const users = Array.from(checkboxes).reduce((arr, checkbox) => {
@@ -70,7 +69,24 @@ function postSelectedUsers() {
     })
 }
 
+function getPreview() {
+    return fetch('teampage.html')
+        .then(response => response.text())
+        .catch(error => {
+            throw new Error('API Error', error)
+        });
+}
+
+function showPreview(html) {
+    document.getElementById('staffPreview').innerHTML = html;
+}
+
 getUsers().then(users => createUserList(users));
-postSelectedUsers();
+
+const checkboxes = document.getElementsByClassName('user-checkbox');
+selectAll(checkboxes);
+postSelectedUsers(checkboxes);
+
+getPreview().then(html => showPreview(html));
 
 })();
