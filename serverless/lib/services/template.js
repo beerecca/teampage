@@ -1,8 +1,8 @@
 const template = `{{#each staff}}
-    <div class="staff__container" data-office="{{office}}" data-team="{{team}}">
-        <img src="{{photo}}">
-        <p>{{name}}</p>
-        <p>{{title}}</p>
+    <div class="tp-staff" data-office="{{office}}" data-team="{{team}}">
+        <img class="tp-staff__avatar" src="{{photo}}">
+        <h4 class="tp-staff__name">{{name}}</h4>
+        <p class="tp-staff__title">{{title}}</p>
     </div>
 {{/each}}`;
 
