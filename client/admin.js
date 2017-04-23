@@ -79,10 +79,15 @@
                 return arr;
             }, []);
 
-            postUsers(users).then(() => {
-                window.alert('Successfully submitted!');
-                location.reload(true);
-            });
+            postUsers(users)
+                .then(() => {
+                    window.alert('Successfully submitted!');
+                    location.reload(true);
+                })
+                .catch((e) => {
+                    window.alert('An error has occurred.');
+                    console.log('Error', e);
+                });
         })
     }
 
