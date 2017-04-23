@@ -1,0 +1,21 @@
+#userList {
+    -webkit-column-count: 4; /* Chrome, Safari, Opera */
+    -moz-column-count: 4; /* Firefox */
+    column-count: 4;
+    -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+    -moz-column-gap: 40px; /* Firefox */
+    column-gap: 40px;
+}
+
+html {
+    font-size: 16px;
+}
+
+.team-page {
+    margin-bottom: 60px;
+}
+
+@font-face{font-family:"MiloWeb";src:url("resources/MiloWeb.woff") format("woff")}
+@font-face{font-family:"MiloWeb-Regular";src:url("resources/MiloWeb.woff") format("woff")}
+@font-face{font-family:"MiloWeb-Light";src:url("resources/MiloWeb-Light.woff") format("woff")}
+@font-face{font-family:"MiloWeb-ExtraLight";src:url("resources/MiloWeb-Extralight.woff") format("woff")}

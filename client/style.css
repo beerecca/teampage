@@ -1,27 +1,16 @@
-/*Styling for selection page*/
-
-#userList {
-    -webkit-column-count: 4; /* Chrome, Safari, Opera */
-    -moz-column-count: 4; /* Firefox */
-    column-count: 4;
-    -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
-    -moz-column-gap: 40px; /* Firefox */
-    column-gap: 40px;
-}
-
-html {
-    font-size: 16px;
-}
-
-.team-page {
-    margin-bottom: 60px;
-}
-
-/*Styling for injected html*/
-
 .tp-staff__container {
     margin-top: 20px;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
     column-count: 2;
+}
+
+@media (max-width: 767px) {
+    .tp-staff__container {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+    }
 }
 
 .tp-staff {
@@ -55,10 +44,15 @@ html {
     padding-left: 20px;
 }
 
+.tp-filters--teams {
+    padding-bottom: 40px;
+}
+
 .tp-filters__filter {
     margin-right: 20px;
     color: #303030;
     text-transform: uppercase;
+    display: inline-block;
     font-size: 16px;
 }
 
@@ -70,5 +64,4 @@ html {
 .tp-filters__filter--active {
     color: #00A5C9;
     border-bottom: 2px solid #00A5C9;
-    padding-bottom: 5px;
 }

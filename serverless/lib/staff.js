@@ -35,10 +35,11 @@ export default class Staff {
 
 function createStaff(user) {
     const org = user.orgUnitPath.split('/');
+    const photo = user.thumbnailPhotoUrl.includes('private') ? null : user.thumbnailPhotoUrl;
     return {
         name: user.name.fullName,
         title: user.organizations[0].title,
-        photo: user.thumbnailPhotoUrl,
+        photo: photo,
         office: org[1],
         team: org[2],
     }
