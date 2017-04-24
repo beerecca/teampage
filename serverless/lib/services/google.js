@@ -32,6 +32,7 @@ class Google {
             .then(() => {
                 const params = {
                     domain: 'usabilla.com',
+                    maxResults: 500,
                     viewType: 'admin_view',
                     auth: this.jwt
                 };
