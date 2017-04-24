@@ -34,11 +34,12 @@ export default class Staff {
 }
 
 function createStaff(user) {
-    const org = user.orgUnitPath.split('/');
-    const photo = user.thumbnailPhotoUrl.includes('private') ? null : user.thumbnailPhotoUrl;
+    const {orgUnitPath, thumbnailPhotoUrl, name, organizations} = user;
+    const org = (orgUnitPath && orgUnitPath.includes('/')) ? orgUnitPath.split('/') : ['','',''];
+    const photo = (thumbnailPhotoUrl) ? (thumbnailPhotoUrl.includes('private') ? null : thumbnailPhotoUrl) : null;
     return {
-        name: user.name.fullName,
-        title: user.organizations[0].title,
+        name: (name && name.fullName) ? name.fullName : '',
+        title: (organizations && organizations.length > 0 && organizations[0].title) ? organizations[0].title : '',
         photo: photo,
         office: org[1],
         team: org[2],

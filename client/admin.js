@@ -81,8 +81,7 @@
 
             postUsers(users)
                 .then(() => {
-                    window.alert('Successfully submitted!');
-                    location.reload(true);
+                    window.alert('Successfully submitted! Refresh to see updated preview.');
                 })
                 .catch((e) => {
                     window.alert('An error has occurred.');
