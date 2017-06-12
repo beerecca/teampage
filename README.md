@@ -7,12 +7,12 @@ This project allows you to have the team page on your site automatically update 
 To deploy the backend, you will need an admin login to your Google Apps account. You will need to create a new project in the [google console](https://console.cloud.google.com) with a service account that has domain-wide delegation enabled and the OAuth 2 scope: 'https://www.googleapis.com/auth/admin.directory.user.readonly' enabled. 
 
 Save the following environment variables in a file called secrets.dev.yml:
- - GOOGLE_CLIENT_EMAIL (this is the service account id, ending in iam.gserviceaccount.com)
- - GOOGLE_ADMIN_EMAIL (the email address of an admin user at your company) 
- - GOOGLE_PRIVATE_KEY (created when you create your service account)
- - BUCKET_NAME (name of the bucket serverless will create to store your html)
- - SETTINGS_TABLE (name of the dynamodb table serverless will create to store your selected users)
- - DOMAIN (your google apps domain)
+- GOOGLE_CLIENT_EMAIL: (this is the service account id, ending in iam.gserviceaccount.com)
+- GOOGLE_ADMIN_EMAIL: (the email address of an admin user at your company) 
+- GOOGLE_PRIVATE_KEY: (created when you create your service account, [use | to format](http://www.yaml.org/spec/1.2/spec.html#id2795688))
+- BUCKET_NAME: (name of the bucket serverless will create to store your html - must be [globally unique](http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html))
+- SETTINGS_TABLE: (name of the dynamodb table serverless will create to store your selected users)
+- DOMAIN: (your google apps domain)
 
 You can also use the [apis explorer](https://developers.google.com/apis-explorer/#p/admin/directory_v1/directory.users.list) to test the directory api.
 
@@ -35,7 +35,7 @@ The frontend folder contains an admin app which can be used to filter the google
 ```const CONFIG = {
 getUsers: '<your users endpoint, created and returned by your serverless deploy>',
 postStaff: '<your staff endpoint, created and returned by your serverless deploy>',
-getHtml: '<your bucket url>/teampage.html'};
+getHtml: '<your serverless stage>-<your bucket url>/teampage.html'};
 ```
 
 You will want to copy all the static files in this folder to your intranet or another location where your staff can administer the team page.

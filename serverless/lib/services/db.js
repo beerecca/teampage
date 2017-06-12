@@ -16,7 +16,7 @@ class DB {
                     key: tableKey
                 }
             }).promise()
-            .then(result => { resolve(result.Item.value) })
+            .then(result => { resolve(result.Item && result.Item.value || []) })
             .catch(err => { reject(new Error(err)) });
         });
     }
