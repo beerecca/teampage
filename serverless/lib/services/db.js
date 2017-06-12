@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk';
+const tableKey = 'selectedUsers';
 
 class DB {
 
@@ -12,7 +13,7 @@ class DB {
             this.db.get({
                 TableName: this.table,
                 Key: {
-                    key: 'selectedUsers'
+                    key: tableKey
                 }
             }).promise()
             .then(result => { resolve(result.Item.value) })
@@ -25,7 +26,7 @@ class DB {
             this.db.update({
                 TableName: this.table,
                 Key: {
-                    key: 'selectedUsers'
+                    key: tableKey
                 },
                 AttributeUpdates: {
                     value: {

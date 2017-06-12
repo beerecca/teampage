@@ -13,8 +13,9 @@ provider:
         GOOGLE_CLIENT_EMAIL: ${self:custom.secrets.GOOGLE_CLIENT_EMAIL}
         GOOGLE_ADMIN_EMAIL: ${self:custom.secrets.GOOGLE_ADMIN_EMAIL}
         GOOGLE_PRIVATE_KEY: ${self:custom.secrets.GOOGLE_PRIVATE_KEY}
-        SETTINGS_TABLE: ${self:service}-${opt:stage, self:provider.stage}-settings
-        BUCKET_NAME: team-html-page
+        DOMAIN: ${self:custom.secrets.DOMAIN}
+        SETTINGS_TABLE: ${opt:stage, self:provider.stage}-${self:custom.secrets.SETTINGS_TABLE}
+        BUCKET_NAME: ${opt:stage, self:provider.stage}-${self:custom.secrets.BUCKET_NAME}
     iamRoleStatements:
         - Effect: Allow
           Action:

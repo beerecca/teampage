@@ -31,7 +31,7 @@ class Google {
         return this.login()
             .then(() => {
                 const params = {
-                    domain: 'usabilla.com',
+                    domain: process.env.DOMAIN,
                     maxResults: 500,
                     viewType: 'admin_view',
                     auth: this.jwt
